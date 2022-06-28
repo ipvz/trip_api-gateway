@@ -1,0 +1,14 @@
+spring:
+#  profiles:
+#    active: dev
+  application:
+    name: api-gateway
+
+server:
+  port: 8181
+
+gateway:
+  test:
+    message: "Hello!"
+    message2: "World!"
+
