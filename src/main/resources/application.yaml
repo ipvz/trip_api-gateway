@@ -1,6 +1,36 @@
 spring:
   application:
     name: api-gateway
+  cloud:
+    gateway:
+      httpclient:
+        wiretap: true
+      httpserver:
+        wiretap: true
+      routes:
+        - id: auth_login
+          uri: ${client.auth.uri}
+          predicates:
+            - Path=/auth/login
+            - Method=POST
+
+        - id: auth_register
+          uri: ${client.auth.uri}
+          predicates:
+            - Path=/auth/register
+            - Method=POST
+          filters:
+            - RewritePath=/auth/register,/auth/signup
+
+        - id: auth_refresh
+          uri: ${client.auth.uri}
+          predicates:
+            - Path=/auth/refresh
+            - Method=POST
+
+client:
+  auth:
+    uri: http://localhost:8888
 
 management:
   endpoint:
@@ -11,7 +41,11 @@ management:
 server:
   port: 8181
 
-gateway:
-  test:
-    message: "Hello!"
-    message2: "World!"
+logging:
+  level:
+    reactor:
+      netty: INFO
+    org:
+      springframework:
+        cloud:
+          gateway: TRACE
