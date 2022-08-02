@@ -11,22 +11,26 @@ spring:
         - id: auth_login
           uri: ${client.auth.uri}
           predicates:
-            - Path=/auth/login
+            - Path=/api/auth/login
             - Method=POST
+          filters:
+            - StripPrefix=1
 
         - id: auth_register
           uri: ${client.auth.uri}
           predicates:
-            - Path=/auth/register
+            - Path=/api/auth/register
             - Method=POST
           filters:
-            - RewritePath=/auth/register,/auth/signup
+            - SetPath=/auth/signup
 
         - id: auth_refresh
           uri: ${client.auth.uri}
           predicates:
-            - Path=/auth/refresh
+            - Path=/api/auth/refresh
             - Method=POST
+          filters:
+            - StripPrefix=1
 
 client:
   auth:
