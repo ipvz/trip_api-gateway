@@ -32,6 +32,14 @@ spring:
           filters:
             - StripPrefix=1
 
+        - id: auth_docs
+          uri: ${client.auth.uri}
+          predicates:
+            - Path=/api/auth/docs
+            - Method=GET
+          filters:
+            - StripPrefix=1
+
 client:
   auth:
     uri: http://localhost:8888
